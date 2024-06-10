@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %} Upload Data {% endblock %}
+{% block content %}
+    <div class="container">
+        <h1 class="mt-5">Please upload your CSV file</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <input type="file" class="form-control-file" name="document" id="document" required="required">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="operation">Select Operation</label>
+                    <select class="form-control" name="operation" id="operation">
+                        <option value="solo">Solo Field</option>
+                        <option value="relation">Relation Between Columns</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="attributeid" id="id">Attribute ID</label>
+                    <input type="text" class="form-control" name="attributeid" id="attributeid">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="column_x" id="column_x_label" style="display: none;">Enter X Column Name</label>
+                    <input type="text" class="form-control" name="column_x" id="column_x" style="display: none;">
+                    <label for="column_y" id="column_y_label" style="display: none;">Enter Y Column Name</label>
+                    <input type="text" class="form-control" name="column_y" id="column_y" style="display: none;">
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </div>
+        </form>
+        <br>
+
+        {% block messages %}
+            {% if messages %}
+                <div class="container" style="color: firebrick; margin-top: 20px">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endblock %}
+    </div>
+    <script>
+        document.getElementById('operation').addEventListener('change', function () {
+            var selectedValue = this.value;
+            if (selectedValue === 'relation') {
+                document.getElementById('column_x_label').style.display = 'block';
+                document.getElementById('column_x').style.display = 'block';
+                document.getElementById('column_y_label').style.display = 'block';
+                document.getElementById('column_y').style.display = 'block';
+                document.getElementById('id').style.display = 'none';
+                document.getElementById('attributeid').style.display = 'none';
+            } else {
+                document.getElementById('column_x_label').style.display = 'none';
+                document.getElementById('column_x').style.display = 'none';
+                document.getElementById('column_y_label').style.display = 'none';
+                document.getElementById('column_y').style.display = 'none';
+                document.getElementById('id').style.display = 'block';
+                document.getElementById('attributeid').style.display = 'block';
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'css/analyzer.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="showcase">
+
+    <div class="d1">
+        <h1>Welcome to Analyzer</h1>
+        <p>A core Platform to Analyze your data Visually</p>
+        <div class="sfeatures">
+           <ul>
+             <li><i class="fa fa-area-chart fa-2x"></i> Analyze your Raw Data</li>
+             <li><i class="fa fa-line-chart fa-2x"></i> Visualize your Raw Data</li>
+             <li><i class="fa fa-sitemap fa-2x"></i> Find relations between similar dara</li>
+           </ul>
+        </div>
+    </div>
+    <div class="d2">
+        <img src="media/images/business-analysis.png" alt="Image">
+    </div>
+</div>
+<div class="showcase1">
+    <div class="feature">
+        <i class="fa fa-bar-chart fa-3x"></i>
+        <h2>Data Visualization</h2>
+        <p>Visualize your data in meaningful charts and graphs.</p>
+
+    </div>
+    <div class="feature">
+       <i class="fa fa-pie-chart fa-3x"></i>
+        <h2>Data Analysis</h2>
+        <p>Analyze your data with powerful statistical tools.</p>
+
+    </div>
+    <div class="feature">
+        <i class="fa fa-search fa-3x"></i>
+        <h2>Data Exploration</h2>
+        <p>Explore your data to uncover hidden insights.</p>
+
+    </div>
+    <div class="feature">
+        <i class="fa fa-cog fa-3x"></i>
+        <h2>Customization</h2>
+        <p>Customize your visualizations to suit your needs.</p>
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/analyzer.js' %}"></script>
+{% endblock %}

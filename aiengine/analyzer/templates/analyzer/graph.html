@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block title %} Graph {% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="results">
+    {% block message %}
+        {% if messages %}
+            <div class="container" style="color: #456; margin-top: 10px">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endblock %}
+    <div class="row container">
+        <div class="container" style="width: 70%; height: 50%;">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+   var colorArray = [
+    '#dd0453', '#fdfd05', '#66E64D', '#0660e7', '#9900B3',
+    '#d07201', '#14b300', '#06d2a6', '#f8061a', '#c45850',
+    '#66664D', '#d6d6d7', '#76008f', '#4DB3FF', '#1AB399',
+    '#ec92d1', '#33991A', '#ba8383', '#B3B31A', '#00E680',
+    '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+    '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'
+];
+
+// Assuming listkeys, listvalues, x_values, and y_values are passed from the view
+{% if op == 'solo' %}
+    new Chart(document.getElementById("chart"), {
+        type: 'pie',
+        data: {
+            labels: {{ listkeys|safe }},
+            datasets: [{
+                label: "{{ attribute }}",
+                backgroundColor: colorArray,
+                data: {{ listvalues|safe }}
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Solo Visualization'
+            }
+        }
+    });
+{% else %}
+    var x_values = {{ x_values|safe }};
+    var y_values = {{ y_values|safe }};
+
+    // Check if x and y values are numeric
+    var isNumeric = function(arr) {
+        return arr.every(function(val) {
+            return typeof val === 'number' && !isNaN(val);
+        });
+    };
+
+    var isXNumeric = isNumeric(x_values);
+    var isYNumeric = isNumeric(y_values);
+
+    if (isXNumeric && isYNumeric) {
+        // Both x and y values are numeric, create a scatter plot
+        var data = x_values.map(function(x, index) {
+            return {x: x, y: y_values[index]};
+        });
+
+        new Chart(document.getElementById("chart"), {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: "{{ column_x }} vs {{ column_y }}",
+                    backgroundColor: colorArray,
+                    data: data
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Relation Visualization'
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'linear',
+                        position: 'bottom'
+                    }],
+                    yAxes: [{
+                        type: 'linear',
+                        position: 'left'
+                    }]
+                }
+            }
+        });
+    } else if (!isXNumeric && !isYNumeric) {
+        // Both x and y values are non-numeric, create a bar chart with categorical scales
+        var x_labels = x_values.map(String);
+        var y_labels = y_values.map(String);
+
+        var data = x_labels.map(function(x, index) {
+            return {x: x, y: y_labels[index]};
+        });
+
+        new Chart(document.getElementById("chart"), {
+            type: 'bar',
+            data: {
+                labels: x_labels,
+                datasets: [{
+                    label: "{{ column_x }} vs {{ column_y }}",
+                    backgroundColor: colorArray,
+                    data: data
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Relation Visualization'
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'category',
+                        position: 'bottom'
+                    }],
+                    yAxes: [{
+                        type: 'category',
+                        position: 'left'
+                    }]
+                }
+            }
+        });
+    } else {
+        // Either x or y values are non-numeric, create a bar chart with x values converted to strings
+        var data = x_values.map(function(x, index) {
+            return {x: x.toString(), y: y_values[index]};
+        });
+
+        new Chart(document.getElementById("chart"), {
+            type: 'scatter',
+            data: {
+                labels: x_values.map(String),
+                datasets: [{
+                    label: "{{ column_x }} vs {{ column_y }}",
+                    backgroundColor: colorArray,
+                    data: data
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Relation Visualization'
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'category',
+                        position: 'bottom'
+                    }],
+                    yAxes: [{
+                        type: 'linear',
+                        position: 'left'
+                    }]
+                }
+            }
+        });
+    }
+{% endif %}
+
+</script>
+
+{% endblock %}
