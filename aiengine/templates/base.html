@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Aiengine {% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
+
+
+</head>
+<body>
+   <div class="offcanvas" id="offcanvas">
+        <i onclick="menutoggle()" class="fa fa-window-close-o  hide-btn" aria-hidden="true"></i>
+
+        <h1>Explore All</h1>
+        <p>This Engine is Provided By Aioexperts</p>
+        <hr>
+        <ul>
+             <li><i class="fa fa-laptop" aria-hidden="true"></i> <a href="{% url 'analyzer:index' %}">Home</a></li>
+             <li><i class="fa fa-star" aria-hidden="true"></i> <a href="{% url 'analyzer:features' %}">Features</a></li>
+             <li><i class="fa fa-database" aria-hidden="true"></i> <a href="{% url 'analyzer:upload-data' %}">Engine</a></li>
+        </ul>
+    </div>
+   <header>
+       <div class="top-main">
+           <div class="title-and-logo">
+               <h1>Analyzer</h1>
+
+           </div>
+           <div class="navbar">
+               <div class="menubar">
+                   <ul>
+                       <li><a href="{% url 'analyzer:index' %}"><i class="fa fa-laptop"></i> Home</a> </li>
+                       <li><a href="{% url 'analyzer:features' %}"><i class="fa fa-star"></i> Features</a> </li>
+                       <li><a href="{% url 'analyzer:upload-data' %}"><i class="fa fa-database"></i> Engine</a> </li>
+                   </ul>
+
+               </div>
+               <div class="toolsbar">
+                   <i onclick="menutoggle()" class="fa fa-bars"></i></a>
+
+               </div>
+
+           </div>
+       </div>
+   </header>
+   <div class="root-app">
+     {% block content %}
+     {% endblock %}
+   </div>
+<footer class="footer mt-5 py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h5>About Us</h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla hendrerit diam auctor, luctus magna vel, fermentum urna.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'analyzer:index' %}">Home</a></li>
+                    <li><a href="{% url 'analyzer:features' %}">Features</a></li>
+                    <li><a href="{% url 'analyzer:upload-data' %}">Engine</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5>Contact Us</h5>
+                <p>Karnatka, Bengalore, India</p>
+                <p>Email: ~~~@example.com</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2024 Analyzer. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="{% static 'js/base.js' %}"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   {% block extra_js %}{% endblock %}
+
+</body>
+</html>
